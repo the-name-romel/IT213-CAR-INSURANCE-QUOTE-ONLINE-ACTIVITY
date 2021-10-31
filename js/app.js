@@ -1,6 +1,7 @@
 //Variables
 const form = document.getElementById('request-quote');
 
+const html = new HTMLUI();
 
 
 //Event Listeners
@@ -9,7 +10,7 @@ eventListeners();
 function eventListeners() {
     document.addEventListener('DOMContentLoaded', function() {
         //Create the options for the Years
-        const html = new HTMLUI() ;
+       
         html.displayYears();
     
     }); 
@@ -25,8 +26,8 @@ function eventListeners() {
     const level = document.querySelector('input[name="level"]:checked').value;
 
     //Check that all the fields have something
-    if( make === '' || year === '' || level === '') {
-        console.log(error);
+    if( make === '' || year === '' || level === '' ) {
+       html.displayError('All the fields are mandatory');
 
     } else {
         console.log('Allright!');
@@ -59,4 +60,23 @@ HTMLUI.prototype.displayYears = function() {
         
     }
    
+}
+
+//Prints an error
+HTMLUI.prototype.displayError = function (message) {
+    //create a div
+    const div = document.createElement('div');
+    div.classList = 'error';
+
+    //Insert the Message
+    div.innerHTML = `
+        <p>${message}</p>
+    `;
+
+    form.insertBefore(div, document.querySelector('.form-group'));
+
+    //Remove the error
+    setTimeout(function() {
+        document.querySelector('.error').remove();
+    }, 3000);
 }
