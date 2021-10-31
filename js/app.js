@@ -4,6 +4,7 @@ const form = document.getElementById('request-quote');
 const html = new HTMLUI();
 
 
+
 //Event Listeners
 eventListeners();
 
@@ -28,8 +29,13 @@ function eventListeners() {
     //Check that all the fields have something
     if( make === '' || year === '' || level === '' ) {
        html.displayError('All the fields are mandatory');
-
     } else {
+        //Clear the previous quotes
+        const prevResult = document.querySelector('#result div');
+        if(prevResult != null) {
+            prevResult.remove();
+        }
+
        //Make the quotation
        const insurance = new Insurance(make, year, level);
        const  price = insurance.calculateQuotation(insurance);
@@ -41,6 +47,7 @@ function eventListeners() {
     });
  
 }
+
 
 
 //Objects
@@ -118,6 +125,7 @@ Insurance.prototype.calculateLevel = function(price, level) {
 function HTMLUI() {}
 
 
+
 //Displays the latest years in the select
 HTMLUI.prototype.displayYears = function() {
     //Max and Minimum Years
@@ -187,8 +195,16 @@ HTMLUI.prototype.showResults = function(price, insurance) {
         <p>Year: ${insurance.year}</p>
         <p>Level: ${insurance.level}</p>
         <p class="total">Total: $ ${price}</p>
-    `
+    `;
 
-    //Insert this in the HTML
-    result.appendChild(div);
+    const spinner = document.querySelector('#loading img');
+    spinner.getElementsByClassName.display = 'block';
+
+    setTimeout(function() {
+        spinner.style.display = 'none';
+        //Insert this in the HTML
+            result.appendChild(div);
+    }, 3000);
+
+    
 }
