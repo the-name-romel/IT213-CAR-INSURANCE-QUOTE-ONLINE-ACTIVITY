@@ -33,6 +33,9 @@ function eventListeners() {
        //Make the quotation
        const insurance = new Insurance(make, year, level);
        const  price = insurance.calculateQuotation(insurance);
+
+       //Print the result from the HTMLUI
+       html.showResults(price);
     }
 
     });
@@ -85,13 +88,30 @@ Insurance.prototype.calculateQuotation = function() {
     
     //Check the level of protection
     const level = insurance.level;
+
+    price = this.calculateLevel(price,level);
     
-    
+    return price;
 
 }
 //Returns the different between years
 Insurance.prototype.getYearDifference = function(year) {
     return new Date().getFullYear() - year;
+}
+
+//Adds the value based on the level of protection
+Insurance.prototype.calculateLevel = function(price, level) {
+    /*
+        Basic Insurance is going to increase the value by 30%
+        Complete Insurance is going to increase the value by 50%  
+    */
+   if(level === 'basic') {
+       price = price * 1.30;
+   } else {
+       price = price * 1.50;
+   }
+
+   return price;
 }
 
 //Everything related to HTML
@@ -135,4 +155,21 @@ HTMLUI.prototype.displayError = function (message) {
     setTimeout(function() {
         document.querySelector('.error').remove();
     }, 3000);
+}
+
+//Prints the result into the HTML
+HTMLUI.prototype.showResults = function(price) {
+    //Print the result
+    const result = document.getElementById('result');
+
+    //Create a div with the result
+    const div = document.createElement('div');
+
+    //Insert the result
+    div.innerHTML = `
+        <p class="total">Total: $ ${price}</p>
+    `
+
+    //Insert this in the HTML
+    result.appendChild(div);
 }
