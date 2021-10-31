@@ -51,7 +51,47 @@ function Insurance(make, year, level){
 
 //Calculate the price for the current quotation
 Insurance.prototype.calculateQuotation = function() {
-    console.log(insurance);
+    let price;
+    const base = 2000;
+
+    //Get the make
+    const make = insurance.make;
+
+    /*
+     1 = American 15%
+     2 = Asian 05%
+     3 = European 35%
+
+     */
+    switch (make) {
+        case '1':
+            price = base * 1.15;
+            break;
+        case '2':
+            price = base * 1.05;
+            break;
+        case '3':
+            price = base * 1.35;
+            break;
+    }
+
+    //Get the year
+    const year = insurance.year;
+    //Get the years difference
+    const difference = this.getYearDifference(year);
+
+    //Each year the cost of the insurance is going to be 3% cheaper
+    price = price - ((difference * 3) * price) / 100;
+    
+    //Check the level of protection
+    const level = insurance.level;
+    
+    
+
+}
+//Returns the different between years
+Insurance.prototype.getYearDifference = function(year) {
+    return new Date().getFullYear() - year;
 }
 
 //Everything related to HTML
