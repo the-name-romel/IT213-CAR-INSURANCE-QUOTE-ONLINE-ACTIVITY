@@ -30,7 +30,9 @@ function eventListeners() {
        html.displayError('All the fields are mandatory');
 
     } else {
-        console.log('Allright!');
+       //Make the quotation
+       const insurance = new Insurance(make, year, level);
+       const  price = insurance.calculateQuotation(insurance);
     }
 
     });
@@ -40,7 +42,21 @@ function eventListeners() {
 
 //Objects
 
+//Everything related to quotation and calculations
+function Insurance(make, year, level){
+    this.make = make;
+    this.year = year;
+    this.level = level;
+}
+
+//Calculate the price for the current quotation
+Insurance.prototype.calculateQuotation = function() {
+    console.log(insurance);
+}
+
+//Everything related to HTML
 function HTMLUI() {}
+
 
 //Displays the latest years in the select
 HTMLUI.prototype.displayYears = function() {
